@@ -1,0 +1,69 @@
+{% extends "users/base.html" %}
+{% block title %}{{ user_type|title }}s{% endblock %}
+{% block content %}
+    {% include "users/user/includes/header.html" %}
+    <div class="container pt-4">
+        <div class="d-flex align-items-center w-100 justify-content-between">
+            <h1>{{ user_type|title }}s</h1>
+            <a href="{% url 'users:register' user_type=user_type %}" class="btn btn-primary">Add {{ user_type | title }}
+                <i class="fa-solid fa-plus ml-3"></i></a>
+        </div>
+        {% if users %}
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>User Name</th>
+                    <th>Position</th>
+                    {% if  user_type == 'student' %}
+                        <th>Class</th>
+                    {% endif %}
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img
+                                        src="{{ user.profile_image.url }}"
+                                        alt=""
+                                        style="width: 45px; height: 45px"
+                                        class="rounded-circle"
+                                />
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">{{ user.first_name | title }} {{ user.last_name | title }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p>{{ user.email }}</p>
+                        </td>
+                        <td>
+                            <p>{{ user.username }}</p>
+                        </td>
+                        <td>{{ user.role | title }}</td>
+                        {% if  user_type == 'student' %}
+                            <td>{{ user.classe }}</td>
+                        {% endif %}
+                        <td class="text-center">
+                            <a href="{% url 'users:edit_user' user_id=user.id %}"
+                               class="btn btn-primary btn-sm">
+                                Edit <i class="fa-solid fa-pen-to-square ml-2"></i>
+                            </a>
+                            <a href="{% url 'users:delete_user' user_id=user.id %}"
+                               class="btn btn-danger btn-sm">Delete <i class="fa-solid fa-trash ml-2"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% include "pagination.html" with page=users %}
+        {% else %}
+            <p>No {{ user_type|title }}s found!</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

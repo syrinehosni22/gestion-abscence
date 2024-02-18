@@ -1,0 +1,59 @@
+{% extends "users/base.html" %}
+{% block title %}courses{% endblock %}
+{% block content %}
+    {% include "users/user/includes/header.html" %}
+    <div class="container pt-4">
+        <div class="d-flex align-items-center w-100 justify-content-between">
+            <h1>Courses</h1>
+            <a href="{% url 'course:addCourse' %}" class="btn btn-primary">Add Course
+                <i class="fa-solid fa-plus ml-3"></i></a>
+        </div>
+        {% if courses %}
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>Course name</th>
+                    <th>Class</th>
+                    <th>Teacher</th>
+                    <th>Day</th>
+                    <th>Hour</th>
+                    <th>Semester</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold mb-1">{{ course.name | title }}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <p>{{ course.class_association }}</p>
+                        </td>
+                        <td>
+                            <p>{{ course.teacher.first_name | title}} {{ course.teacher.last_name | title}}</p>
+                        </td>
+                        <td>
+                            <p>{{ course.dayofweek | title}}</p>
+                        </td>
+                        <td>
+                            <p>{{ course.hour | title}}</p>
+                        </td>
+                        <td>
+                            <p>{{ course.semester | title}}</p>
+                        </td>
+                        <td class="text-center">
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% include "pagination.html" with page=courses %}
+        {% else %}
+            <p>No Courses found!</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

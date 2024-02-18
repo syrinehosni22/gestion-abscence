@@ -1,0 +1,57 @@
+{% with user=request.user %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light pr-4 pl-4">
+        <a class="navbar-brand" href="#">
+            <img src="https://media-exp1.licdn.com/dms/image/C560BAQGNv0Yq-SlPrg/company-logo_200_200/0/1519900616817?e=2159024400&v=beta&t=EdVTw3y69CpsA7-bOXt5vDxORV0Y7J5xvIJb5HNASCU"
+                 style="height: 50px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if user.role == 'admin' %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'users:user_type' user_type='teacher' %}">Teachers</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'users:user_type' user_type='student' %}">Students</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'classes:classes' %}">Classes</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'course:courses' %}">Courses</a>
+                    </li>
+                {% endif %}
+
+                {% if user.role != 'admin' %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'users:account' user_id=user.id %}">My Account</a>
+                    </li>
+                {% endif %}
+
+                {% if user.role == 'teacher' %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'course:todayCourses' %}">Today Courses</a>
+                    </li>
+                {% endif %}
+
+                {% if user.role == 'student' %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'absence:myAbsences' %}">My Absences</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'course:schedule' %}">Schedule</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <form action="{% url 'users:logout' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Logout
+                    <i class="fa-solid fa-right-from-bracket ml-3"></i></button>
+            </form>
+        </div>
+    </nav>
+{% endwith %}

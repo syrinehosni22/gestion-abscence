@@ -1,0 +1,43 @@
+{% extends "users/base.html" %}
+{% block title %}classes{% endblock %}
+{% block content %}
+    {% include "users/user/includes/header.html" %}
+    <div class="container pt-4">
+        <div class="d-flex align-items-center w-100 justify-content-between">
+            <h1>Classes</h1>
+            <a href="{% url 'classes:addClass' %}" class="btn btn-primary">Add Class
+                <i class="fa-solid fa-plus ml-3"></i></a>
+        </div>
+        {% if classes %}
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>Class name</th>
+                    <th>Year</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for class in classes %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold mb-1">{{ class.name | title }}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <p>{{ class.category }}</p>
+                        </td>
+                        <td class="text-center">
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% include "pagination.html" with page=classes %}
+        {% else %}
+            <p>No Classes found!</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

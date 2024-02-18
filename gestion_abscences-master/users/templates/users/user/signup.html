@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+{% block title %}Register {{ user_type|title }}{% endblock %}
+{% block content %}
+    {% include "users/user/includes/header.html" %}
+    <section>
+        <div class="row d-flex flex-column align-items-center m-0">
+            <div style="border-bottom: 3px solid rgba(0,0,0,0.06); height: 200px; background-color: aliceblue;display: flex; align-items: center; justify-content: center">
+                <h1>{{ user_type | title }} Registration</h1>
+            </div>
+            <div class="card rounded-3 w-50 mt-2">
+                <div class="card-body p-4">
+                    {% include "users/user/includes/user_form.html" %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

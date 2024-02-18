@@ -1,0 +1,36 @@
+{% extends "users/base.html" %}
+{% block title %}My Absences{% endblock %}
+{% block content %}
+    {% include "users/user/includes/header.html" %}
+    <div class="container pt-4">
+        <h1>My Absences</h1>
+        {% if absences %}
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Course</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for absence in absences %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold mb-1">{{ absence.date | title }}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <p>{{ absence.course.name | title }}</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% include "pagination.html" with page=absences %}
+        {% else %}
+            <p>No Absences found!</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

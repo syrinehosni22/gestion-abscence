@@ -1,0 +1,26 @@
+{% extends "users/base.html" %}
+{% block title %}Delete User{% endblock %}
+{% block content %}
+    {% include "users/user/includes/header.html" %}
+    <section>
+        <div class="row d-flex flex-column align-items-center m-0">
+            <div style="border-bottom: 3px solid rgba(0,0,0,0.06); height: 200px; background-color: aliceblue;display: flex; align-items: center; justify-content: center">
+                <h1>Delete User</h1>
+            </div>
+            <div class="card rounded-3 w-auto mt-2">
+                <div class="card-body p-4 text-center">
+                    <h2>Are you sure you want to delete {{ user.first_name | title }} {{ user.last_name | title }}?</h2>
+                    <img id="selectedAvatar"
+                         src="{{ user.profile_image.url }}"
+                         class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;"
+                         alt="example placeholder"/>
+                    <form method="post" class="mx-1 mx-md-4 d-flex gap-4 justify-content-center mt-5">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-lg mb-1">Delete</button>
+                        <a href="{% url 'users:user_type' user_type=user.role %}" class="btn btn-secondary btn-lg mb-1">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "users/base.html" %}
+{% block title %}today courses{% endblock %}
+{% block content %}
+    {% include "users/user/includes/header.html" %}
+    <div class="container pt-4">
+        <h1>Today Courses</h1>
+        {% if courses %}
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>Course name</th>
+                    <th>Class</th>
+                    <th>Day</th>
+                    <th>Hour</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold mb-1">{{ course.name | title }}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <p>{{ course.class_association }}</p>
+                        </td>
+                        <td>
+                            <p>{{ course.dayofweek | title }}</p>
+                        </td>
+                        <td>
+                            <p>{{ course.hour | title }}</p>
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'absence:takeAttendance' course_id=course.id %}"
+                               class="btn btn-primary btn-sm">
+                                Take Attendance <i class="fa-solid fa-users ml-2"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% include "pagination.html" with page=courses %}
+        {% else %}
+            <p>No Courses found!</p>
+        {% endif %}
+
+    </div>
+{% endblock %}
